@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.hsy.emp.mapper.StudentMapper">
+    <select id="getStuInfo" resultType="cn.hsy.emp.entities.StudentEntity">
+        select * from stu_info
+    </select>
+    <select id="getById" resultType="cn.hsy.emp.entities.StudentEntity" parameterType="java.lang.Integer">
+        select * from stu_info where id =#{id}
+    </select>
+    <insert id="insertStudentInfo" parameterType="cn.hsy.emp.entities.StudentEntity">
+        insert into stu_info(`name`,gender,major,phone,email)
+        values (#{name},#{gender},#{major},#{phone},#{email})
+    </insert>
+    <update id="updateStudentInfo" parameterType="cn.hsy.emp.entities.StudentEntity">
+        update stu_info set `name` =#{name},gender=#{gender},major=#{major},
+        phone = #{phone},email = #{email} where id = #{id}
+    </update>
+    <delete id="deleteStudentInfo" parameterType="java.lang.Integer">
+        delete from stu_info where id = #{id}
+    </delete>
+</mapper>

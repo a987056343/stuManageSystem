@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>学生信息管理</title>
+		<link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.css}" rel="stylesheet">
+		<link href="asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+	</head>
+
+	<body>
+		<div th:replace="commons/bar::topbar"></div>
+		<div class="container-fluid">
+			<div class="row">
+				<div th:replace="commons/bar::#sidebar(activeUri='emps')"></div>
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+					<form th:action="@{/students}" method="post" onsubmit="return checkForm();">
+						<input type="hidden" name="_method" value="put" th:if="${stu!=null}">
+						<input type="hidden" name="id" th:if="${stu!=null}" th:value="${stu.id}">
+					<div class="form-group">
+						<label>姓名</label>
+						<input id="name" name="name" type="text" class="form-control"  placeholder="ZhangSan" th:value="${stu!=null}?${stu.name}" autocomplete="off">
+					</div>
+					<div class="form-group">
+						<label>邮箱</label>
+						<input id="email" name="email" type="email" class="form-control"  placeholder="xxxxx@yyy.com" th:value="${stu!=null}?${stu.email}" autocomplete="off">
+					</div>
+					<div class="form-group">
+						<label>性别</label><br/>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="gender" value="男" th:checked="${stu!=null}?${stu.gender=='男'}">
+							<label class="form-check-label">男</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="gender"  value="女" th:checked="${stu!=null}?${stu.gender=='女'}">
+							<label class="form-check-label">女</label>
+						</div>
+					</div>
+						<div class="form-group">
+							<label>专业</label>
+							<input id="major" name="major" type="text" class="form-control"  placeholder="专业名称" th:value="${stu!=null}?${stu.major}" autocomplete="off">
+						</div>
+					<div class="form-group">
+						<label>手机号</label>
+						<input id="phone" name="phone" type="text" class="form-control"  placeholder="手机号" th:value="${stu!=null}?${stu.phone}" autocomplete="off">
+					</div>
+						<button type="submit" class="btn btn-primary" th:text="${stu!=null}?'修改':'添加'">添加</button>
+					</form>
+				</main>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js"></script>
+		<script type="text/javascript" src="asserts/js/popper.min.js"></script>
+		<script type="text/javascript" src="asserts/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="asserts/js/feather.min.js"></script>
+		<script>
+			feather.replace()
+		</script>
+		<script th:inline="javascript">
+			function checkForm(){
+				var name = document.getElementById("name").value;
+				var email = document.getElementById("email").value;
+				var major = document.getElementById("major").value;
+				var phone = document.getElementById('phone').value;
+				if (!/^[\u4e00-\u9fa5]+$/i.test(name)) {
+					alert("姓名格式有误,请重新输入!");
+					return false;
+				}
+				if(!/^[\u4e00-\u9fa5]+$/i.test(major)) {
+					alert("专业有误,请重新输入!");
+					return false;
+				}
+				if (!/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(email)){
+					alert("邮箱格式错误,请重新输入!");
+					return false;
+				}
+				if(!(/^1[345789]\d{9}$/.test(phone))){
+					alert("手机号码有误，请重新输入!");
+					return false;
+				}
+				else{
+					alert("操作成功!");
+					return true;
+				}
+			}
+		</script>
+	</body>
+</html>

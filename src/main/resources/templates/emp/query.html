@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="author" content="huangsiyu">
+		<title>成绩查询界面</title>
+		<link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.css}" rel="stylesheet">
+		<link href="asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+	</head>
+
+	<body>
+		<div th:replace="commons/bar::topbar"></div>
+		<div class="container-fluid">
+			<div class="row">
+				<div th:replace="commons/bar::#sidebar(activeUri='query')"></div>
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+					<form id="form1" action="#" method="post" onsubmit="return f();">
+					<div class="input-group mb-3">
+						<span class="input-group-text" id="basic-addon1">选择学生:</span>
+						<select id="stuName" name="stuName" class="form-select"  style = "width:300px;font-size: large;">
+							<option th:each="query:${queryList}" th:value="${query.stuName}" th:text="${query.stuName}"></option>
+						</select>
+						<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+						<button class="btn btn-sm btn-success" type="submit">查看课程成绩</button>
+					</div>
+					<div class="table-responsive">
+						<table class="table table-striped table-sm">
+							<thead>
+								<tr>
+									<th>编号</th>
+									<th>姓名</th>
+									<th>性别</th>
+									<th>专业</th>
+									<th>课程</th>
+									<th>学分</th>
+									<th>成绩</th>
+									<th>绩点</th>
+								</tr>
+							</thead>
+							<tbody>
+							<tr th:each="cs:${courSc}">
+								<td th:text="${cs.stuId}"></td>
+								<td th:text="${cs.stuName}"></td>
+								<td th:text="${cs.stuGender}"></td>
+								<td th:text="${cs.stuMajor}"></td>
+								<td th:text="${cs.stuCourse}"></td>
+								<td th:text="${cs.courseCredit}"></td>
+								<td th:text="${cs.stuScore}"></td>
+								<td th:text="${cs.gradePoint}"></td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</main>
+			</div>
+		</div>
+
+		<script type="text/javascript" th:src="@{asserts/js/jquery-3.2.1.slim.min.js}"></script>
+		<script type="text/javascript" src="asserts/js/popper.min.js"></script>
+		<script type="text/javascript" src="asserts/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="asserts/js/feather.min.js"></script>
+		<script>
+			feather.replace()
+		</script>
+		<script type="text/javascript" th:inline="javascript">
+			function f() {
+				var myselect = document.getElementById("stuName");　　
+				var index = myselect.selectedIndex;　　　　　　　　　
+				var sName = myselect.options[index].value;　　　　　　
+				document.getElementById('form1').action = "/query/"+sName;
+				document.getElementById('form1').submit();
+			}
+		</script>
+	</body>
+</html>

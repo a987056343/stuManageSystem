@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>成绩管理</title>
+		<link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.css}" rel="stylesheet">
+		<link href="asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+	</head>
+
+	<body>
+		<div th:replace="commons/bar::topbar"></div>
+		<div class="container-fluid">
+			<div class="row">
+				<div th:replace="commons/bar::#sidebar(activeUri='emps')"></div>
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+					<form th:action="@{/score/}+${stu.id}" method="post" onsubmit="return checkForm();">
+					<div class="form-group">
+						<label>编号</label>
+						<input type="text" name="stuId" class="form-control" th:value="${stu.id}" disabled="disabled">
+					</div>
+					<div class="form-group">
+						<label>姓名</label>
+						<input name="stuName" type="text" class="form-control"  th:value="${stu.name}" disabled="disabled">
+					</div>
+					<div class="form-group">
+						<label>性别</label>
+						<input name="stuGender" type="text" class="form-control"   th:value="${stu.gender}" disabled="disabled">
+					</div>
+					<div class="form-group">
+						<label>专业</label>
+						<input name="stuMajor" type="text" class="form-control"   th:value="${stu.major}" disabled="disabled">
+					</div>
+					<div class="form-group">
+						<label>课程</label>
+						<div>
+							<select name="stuCourse" class="form-select" aria-label=".form-select-lg example" style = "width:300px;font-size: large;">
+								<option th:each="course:${cour}" th:value="${course.courseName}" th:text="${course.courseName}"></option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label>成绩</label>
+						<input id="score" name="stuScore" type="number" class="form-control" autocomplete="off">
+					</div>
+						<button type="submit" class="btn btn-primary">提交</button>
+					</form>
+				</main>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js"></script>
+		<script type="text/javascript" src="asserts/js/popper.min.js"></script>
+		<script type="text/javascript" src="asserts/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="asserts/js/feather.min.js"></script>
+		<script>
+			feather.replace()
+		</script>
+		<script th:inline="javascript">
+			function checkForm(){
+				var score = document.getElementById("score").value;
+				if(score<0 || score>100){
+					alert("成绩不正确,请重新输入!");
+					return false;
+				}else{
+					alert("成绩添加成功!");
+					return true;
+				}
+			}
+		</script>
+	</body>
+</html>

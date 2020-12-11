@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.hsy.emp.mapper.StuCourseScoreMapper">
+
+    <insert id="addScore" parameterType="cn.hsy.emp.entities.StuCourseScoreEntity">
+        insert into stu_course_score(stu_id,stu_name,stu_gender,stu_major,stu_course,stu_score,course_credit,grade_point)
+        values (#{stuId},#{stuName},#{stuGender},#{stuMajor},#{stuCourse},#{stuScore},#{courseCredit},#{gradePoint})
+    </insert>
+    <select id="queryScore" resultType="cn.hsy.emp.entities.StuCourseScoreEntity" parameterType="java.lang.String">
+        select * from stu_course_score where stu_name = #{stuName}
+    </select>
+    <select id="getStuName" resultType="cn.hsy.emp.entities.StuCourseScoreEntity">
+        select distinct stu_name from stu_course_score
+    </select>
+    <select id="courseScoreExists" resultType="cn.hsy.emp.entities.StuCourseScoreEntity"
+    parameterType="cn.hsy.emp.entities.StuCourseScoreEntity">
+        select * from stu_course_score where stu_name = #{stuName} and stu_course = #{stuCourse}
+    </select>
+    <update id="updateScore" parameterType="cn.hsy.emp.entities.StuCourseScoreEntity">
+        update stu_course_score set stu_score = #{stuScore},grade_point = #{gradePoint}
+        where stu_name = #{stuName} and stu_course = #{stuCourse}
+    </update>
+
+</mapper>
